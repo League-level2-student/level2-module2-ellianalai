@@ -10,4 +10,11 @@ package _08_LeagueSnake;
  */
 public class Segment {
     
+	int x;
+	int y;
+	
+	public Segment (int x_var, int y_var){
+		this.x = x_var;
+		this.y = y_var;
+	}
 }
