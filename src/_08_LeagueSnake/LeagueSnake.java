@@ -1,5 +1,7 @@
 package _08_LeagueSnake;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class LeagueSnake extends PApplet {
@@ -18,6 +20,7 @@ public class LeagueSnake extends PApplet {
 	Segment head;
 	int direction = UP;
 	int food_eaten = 0;
+	ArrayList<Segment> tail = new ArrayList<Segment>();
 
 
 	/*
@@ -55,6 +58,7 @@ public class LeagueSnake extends PApplet {
 		drawFood();
 		move();
 		drawSnake();
+		eat();
 	}
 
 	void drawFood() {
@@ -73,7 +77,11 @@ public class LeagueSnake extends PApplet {
 
 	void drawTail() {
 		// Draw each segment of the tail
-
+		for(int i =0; i<tail.size(); i++) {
+			rect(snakeX, snakeY, 10,10);
+			tail.add();
+			
+		}
 	}
 
 	/*
@@ -86,8 +94,9 @@ public class LeagueSnake extends PApplet {
 		// After drawing the tail, add a new segment at the "start" of the tail and
 		// remove the one at the "end"
 		// This produces the illusion of the snake tail moving.
-
-	}
+		checkTailCollision();
+		drawTail();
+		}
 
 	void checkTailCollision() {
 		// If the snake crosses its own tail, shrink the tail back to one segment
@@ -104,28 +113,42 @@ public class LeagueSnake extends PApplet {
 	public void keyPressed() {
 		// Set the direction of the snake according to the arrow keys pressed
 		if (key == CODED) {
+			if(keyCode  == UP) {
+				direction = keyCode;
+			}
 			
+			else if(keyCode  == DOWN) {
+				direction = keyCode;
+			}
+			
+			else if(keyCode  == LEFT) {
+				direction = keyCode;
+			}
+			
+			else if(keyCode  == RIGHT) {
+				direction = keyCode;
+			}
 		}
 	}
 
 	void move() {
 		// Change the location of the Snake head based on the direction it is moving.
 		if (direction == UP) {
-			snakeY-=1;
+			snakeY-=10;
 			checkBoundaries();
 		}
 
-		if (direction == DOWN) {
-			snakeY+=1;
+		else if (direction == DOWN) {
+			snakeY+=10;
 			checkBoundaries();
 		}
 
-		if (direction == LEFT) {
-			snakeX-=1;
+		else if (direction == LEFT) {
+			snakeX-=10;
 			checkBoundaries();}
 
-		if (direction == RIGHT) {
-			snakeX+=1;
+		else if (direction == RIGHT) {
+			snakeX+=10;
 			checkBoundaries();
 		}
 		/*
@@ -163,6 +186,10 @@ public class LeagueSnake extends PApplet {
 	void eat() {
 		// When the snake eats the food, its tail should grow and more
 		// food appear
+		if(snakeX == foodX && snakeY == foodY) {
+			food_eaten+=1;
+			dropFood();
+		}
 
 	}
 
