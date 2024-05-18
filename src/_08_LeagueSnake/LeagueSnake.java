@@ -79,10 +79,11 @@ public class LeagueSnake extends PApplet {
 	void drawTail() {
 		// Draw each segment of the tail
 		for(int i =0; i<tail.size(); i++) {
-			rect(snakeX, snakeY, 10,10);
+			rect(tail.get(i).x, tail.get(i).y, 10,10);
 			//tail.add();
 			
 		}
+		
 	}
 
 	/*
@@ -100,15 +101,22 @@ public class LeagueSnake extends PApplet {
 		Segment new_segment = new Segment(snakeX, snakeY);
 		tail.add(new_segment);
 		//What does it mean by remove the first segment from the tail? What's the first segment?
-		tail.remove(head);
+		tail.remove(0);
+		
 		}
 
 	void checkTailCollision() {
 		// If the snake crosses its own tail, shrink the tail back to one segment
-		food_eaten = 1;
-		tail = new ArrayList<Segment>();
-		Segment reset = new Segment(snakeX, snakeY);
-		tail.add(reset);
+		for(int i =0; i<tail.size(); i++) {
+			if(snakeX==tail.get(i).x && snakeY==tail.get(i).y) {
+				food_eaten=1;
+				tail = new ArrayList<Segment>();
+				Segment reset = new Segment(snakeX, snakeY);
+				tail.add(reset);
+			}
+		}
+			
+		
 	}
 
 	/*
@@ -198,11 +206,13 @@ public class LeagueSnake extends PApplet {
 			food_eaten+=1;
 			dropFood();
 			System.out.println(food_eaten);
+			
+			if(food_eaten>0) {
+				Segment grow = new Segment(snakeX, snakeY);
+				tail.add(grow);
+			}
 		}
-		if(food_eaten>0) {
-			Segment grow = new Segment(snakeX, snakeY);
-			tail.add(grow);
-		}
+		
 
 	}
 
